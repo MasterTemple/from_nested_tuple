@@ -1,0 +1,7 @@
+[package]
+name = "from_nested_tuple"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+from_nested_tuple_derive = { path = "./from_nested_tuple_derive" }
