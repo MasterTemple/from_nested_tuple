@@ -1,6 +1,6 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{Data, DeriveInput, Field, Fields, parse_macro_input};
+use syn::{Data, DeriveInput, Fields, parse_macro_input};
 
 #[proc_macro_derive(FromTuple)]
 pub fn from_tuple_derive(input: TokenStream) -> TokenStream {
@@ -20,20 +20,13 @@ pub fn from_tuple_derive(input: TokenStream) -> TokenStream {
 
     let mut iter = fields.into_iter();
 
-    let first = iter.next().unwrap();
+    let first = iter.next().expect("Struct should have at least 1 field");
     let first_name = first.ident.as_ref().unwrap();
     let first_ty = &first.ty;
 
     let mut unnested_names = quote! { #first_name };
     let mut tuple_type = quote! { #first_ty };
 
-    // let second = iter.next().unwrap();
-    // let second_name = second.ident.as_ref().unwrap();
-    // let second_ty = &second.ty;
-    //
-    // let mut unnested_names = quote! { (#first_name, #second_name ) };
-    // let mut tuple_type = quote! { (#first_ty, #second_ty) };
-    //
     for this in iter {
         let this_name = this.ident.as_ref().unwrap();
         let this_ty = &this.ty;
