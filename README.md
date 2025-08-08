@@ -2,6 +2,20 @@
 
 This is created to easily unnest tuples (from chained `.then` statements) in [`chumsky`](https://github.com/zesterer/chumsky/).
 
+## Installation
+
+**Option A**: Modify `Cargo.toml`
+
+```toml
+from_nested_tuple = { git = "https://github.com/MasterTemple/from_nested_tuple" }
+```
+
+**Option B**: Run `cargo` command
+
+```bash
+cargo add --git "https://github.com/MasterTemple/from_nested_tuple"
+```
+
 ## Usage
 
 Deriving the `FromTuple` trait
