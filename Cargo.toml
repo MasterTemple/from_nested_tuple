@@ -5,3 +5,10 @@ edition = "2024"
 
 [dependencies]
 from_nested_tuple_derive = { path = "./from_nested_tuple_derive" }
+
+[workspace]
+members = [
+    "from_nested_tuple_derive",
+    "."
+]
+
