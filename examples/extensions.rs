@@ -1,5 +1,5 @@
 use chumsky::prelude::*;
-use from_nested_tuple::{FromTuple, extension::ParserExt};
+use from_nested_tuple::FromTupleExt;
 
 fn parser<'a>() -> impl Parser<'a, &'a str, (char, char, char)> {
     any().then(any()).then(any()).from_tuple()
