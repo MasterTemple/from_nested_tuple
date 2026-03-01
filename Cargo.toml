@@ -6,6 +6,10 @@ edition = "2024"
 [dependencies]
 from_nested_tuple_derive = { path = "./from_nested_tuple_derive" }
 
+[dev-dependencies]
+from_nested_tuple = { path = "." }
+chumsky = "0.12.0"
+
 [workspace]
 members = [
     "from_nested_tuple_derive",
