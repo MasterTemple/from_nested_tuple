@@ -1,6 +1,6 @@
 [package]
 name = "from_nested_tuple_derive"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "CC0-1.0"
 description = "Derive macro for from_nested_tuple"

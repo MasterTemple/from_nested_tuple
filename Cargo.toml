@@ -1,6 +1,6 @@
 [package]
 name = "from_nested_tuple"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "CC0-1.0"
 description = "Create structs from left-nested tuples (meant to complement chumsky)"
@@ -9,7 +9,7 @@ readme = "README.md"
 keywords = ["chumsky", "nested", "tuple"]
 
 [dependencies]
-from_nested_tuple_derive = { version = "0.1.0", path = "./from_nested_tuple_derive" }
+from_nested_tuple_derive = { version = "0.1.1", path = "./from_nested_tuple_derive" }
 chumsky = { version = "0.12.0", features = ["extension"]}
 
 [dev-dependencies]

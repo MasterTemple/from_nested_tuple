@@ -76,7 +76,7 @@ checksum = "d9c4f5dac5e15c24eb999c26181a6ca40b39fe946cbe4c263c7209467bc83af2"
 
 [[package]]
 name = "from_nested_tuple"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "chumsky",
  "from_nested_tuple",
@@ -85,7 +85,7 @@ dependencies = [
 
 [[package]]
 name = "from_nested_tuple_derive"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "proc-macro2",
  "quote",

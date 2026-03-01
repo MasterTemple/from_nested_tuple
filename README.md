@@ -1,6 +1,16 @@
 # From Nested Tuple
 
+[![Latest Version]][crates.io]
+[![Repo]][GitHub]
+
+[Latest Version]: https://img.shields.io/crates/v/from_nested_tuple.svg
+[crates.io]: https://crates.io/crates/from_nested_tuple
+[Repo]: https://img.shields.io/badge/github-repo-blue?logo=github
+[GitHub]: https://github.com/MasterTemple/from_nested_tuple
+
 _Create structs from left-nested tuples_
+
+---
 
 This is created to easily unnest tuples (from chained `.then` statements) in [`chumsky`](https://github.com/zesterer/chumsky/).
 
@@ -174,12 +184,11 @@ fn main() {
 **Option A**: Modify `Cargo.toml`
 
 ```toml
-from_nested_tuple = { git = "https://github.com/MasterTemple/from_nested_tuple" }
+from_nested_tuple = "0.1.1"
 ```
 
 **Option B**: Run `cargo` command
 
 ```bash
-cargo add --git "https://github.com/MasterTemple/from_nested_tuple"
+cargo add from_nested_tuple
 ```
-
