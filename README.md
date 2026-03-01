@@ -1,5 +1,7 @@
 # From Nested Tuple
 
+_Create structs from left-nested tuples_
+
 This is created to easily unnest tuples (from chained `.then` statements) in [`chumsky`](https://github.com/zesterer/chumsky/).
 
 Go from
