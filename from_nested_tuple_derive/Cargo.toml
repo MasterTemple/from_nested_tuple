@@ -2,7 +2,7 @@
 name = "from_nested_tuple_derive"
 version = "0.1.0"
 edition = "2024"
-license = "CC0"
+license = "CC0-1.0"
 description = "Derive macro for from_nested_tuple"
 repository = "https://github.com/MasterTemple/from_nested_tuple/"
 readme = "README.md"
