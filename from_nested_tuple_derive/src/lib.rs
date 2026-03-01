@@ -59,7 +59,7 @@ pub fn from_tuple_derive(input: TokenStream) -> TokenStream {
                 let mut field_names: Vec<Ident> = vec![first_name];
 
                 for (idx, this) in iter.enumerate() {
-                    let this_name = format_ident!("field{idx}");
+                    let this_name = format_ident!("field{}", idx + 1);
                     let this_ty = this;
                     tuple_type = quote! { (#tuple_type, #this_ty) };
                     unnested_names = quote! { (#unnested_names, #this_name) };
