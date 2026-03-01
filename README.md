@@ -29,7 +29,7 @@ Import
 use from_nested_tuple::FromTuple;
 ```
 
-derive (if using a struct)
+derive (if using on a struct, it is already implemented for built-in tuples)
 
 ```rust
 #[derive(FromTuple)]
@@ -59,10 +59,10 @@ Note: calling `.from_tuple()` is the same as `.map(FromNestedTuple::from_nested_
 
 ## Examples
 
-### Struct with Named Fields
-
 <details>
-<summary>[`examples/named.rs`](./examples/named.rs)</summary>
+<summary>Struct with Named Fields</summary>
+
+See: [`examples/named.rs`](./examples/named.rs)
 
 ```rust
 use chumsky::prelude::*;
@@ -107,10 +107,10 @@ impl from_nested_tuple::FromNestedTuple for WithNamedFields {
 
 </details>
 
-### Struct with Unnamed Fields
-
 <details>
-<summary>[`examples/unnamed.rs`](./examples/unnamed.rs)</summary>
+<summary>Struct with Unnamed Fields</summary>
+
+See: [`examples/unnamed.rs`](./examples/unnamed.rs)
 
 ```rust
 use chumsky::prelude::*;
@@ -147,10 +147,10 @@ impl from_nested_tuple::FromNestedTuple for WithUnnamedFields {
 
 </details>
 
-### Default Tuple
-
 <details>
-<summary>[`examples/tuples.rs`](./examples/tuple.rs)</summary>
+<summary>Default Tuple</summary>
+
+See: [`examples/tuples.rs`](./examples/tuple.rs)
 
 ```rust
 use chumsky::prelude::*;
