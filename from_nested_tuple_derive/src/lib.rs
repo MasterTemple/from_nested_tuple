@@ -37,10 +37,10 @@ pub fn from_tuple_derive(input: TokenStream) -> TokenStream {
                 }
 
                 quote! {
-                    impl #impl_generics from_nested_tuple::FromTuple for #name #ty_generics #where_clause {
+                    impl #impl_generics from_nested_tuple::FromNestedTuple for #name #ty_generics #where_clause {
                         type Tuple = #tuple_type;
 
-                        fn from_tuple(tuple: Self::Tuple) -> Self {
+                        fn from_nested_tuple(tuple: Self::Tuple) -> Self {
                             let #unnested_names = tuple;
                             Self {
                                 #(#field_names,)*
@@ -67,10 +67,10 @@ pub fn from_tuple_derive(input: TokenStream) -> TokenStream {
                 }
 
                 quote! {
-                    impl #impl_generics from_nested_tuple::FromTuple for #name #ty_generics #where_clause {
+                    impl #impl_generics from_nested_tuple::FromNestedTuple for #name #ty_generics #where_clause {
                         type Tuple = #tuple_type;
 
-                        fn from_tuple(tuple: Self::Tuple) -> Self {
+                        fn from_nested_tuple(tuple: Self::Tuple) -> Self {
                             let #unnested_names = tuple;
                             Self(#(#field_names,)*)
                         }

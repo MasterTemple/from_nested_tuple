@@ -6,7 +6,7 @@ struct WithUnnamedFields(char, char, char);
 
 impl WithUnnamedFields {
     fn parser<'a>() -> impl Parser<'a, &'a str, Self> {
-        any().then(any()).then(any()).map(FromTuple::from_tuple)
+        any().then(any()).then(any()).from_tuple()
     }
 }
 

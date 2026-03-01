@@ -2,6 +2,171 @@
 
 This is created to easily unnest tuples (from chained `.then` statements) in [`chumsky`](https://github.com/zesterer/chumsky/).
 
+Go from
+
+```rust
+some().nested().parser().map(|(((child1, child2), child3), child4)| {
+    Parent {
+        child1,
+        child2,
+        child3,
+        child4,
+    }
+})
+```
+
+to
+
+```rust
+some().nested().parser().from_tuple()
+```
+
+## Usage
+
+Import
+
+```rust
+use from_nested_tuple::FromTuple;
+```
+
+derive (if using a struct)
+
+```rust
+#[derive(FromTuple)]
+struct WithNamedFields {
+    a: char,
+    b: char,
+    c: char,
+}
+```
+
+call `.from_tuple()`
+
+```rust
+impl WithNamedFields {
+    fn parser<'a>() -> impl Parser<'a, &'a str, Self> {
+        any().then(any()).then(any()).from_tuple()
+    }
+}
+```
+
+## Exports
+
+- `FromTuple`: for the derive macro (`#[derive(FromTuple)]`) and trait that extends the parser (`.from_tuple()`)
+- `FromNestedTuple`: the trait derived by `FromTuple` (automatically imported for tuples 2 to 64)
+
+Note: calling `.from_tuple()` is the same as `.map(FromNestedTuple::from_nested_tuple)`, but requires no extra imports
+
+## Examples
+
+### Struct with Named Fields
+
+<details>
+<summary>[`examples/named.rs`](./examples/named.rs)</summary>
+
+```rust
+use chumsky::prelude::*;
+use from_nested_tuple::FromTuple;
+
+#[derive(Debug, PartialEq, Eq, FromTuple)]
+struct WithNamedFields {
+    a: char,
+    b: char,
+    c: char,
+}
+
+impl WithNamedFields {
+    fn parser<'a>() -> impl Parser<'a, &'a str, Self> {
+        any().then(any()).then(any()).from_tuple()
+    }
+}
+
+fn main() {
+    assert_eq!(
+        WithNamedFields::parser().parse("123").unwrap(),
+        WithNamedFields {
+            a: '1',
+            b: '2',
+            c: '3'
+        }
+    );
+}
+```
+
+which derives
+
+```rust
+impl from_nested_tuple::FromNestedTuple for WithNamedFields {
+    type Tuple = ((char, char), char);
+    fn from_nested_tuple(tuple: Self::Tuple) -> Self {
+        let ((a, b), c) = tuple;
+        Self { a, b, c }
+    }
+}
+```
+
+</details>
+
+### Struct with Unnamed Fields
+
+<details>
+<summary>[`examples/unnamed.rs`](./examples/unnamed.rs)</summary>
+
+```rust
+use chumsky::prelude::*;
+use from_nested_tuple::FromTuple;
+
+#[derive(Debug, PartialEq, Eq, FromTuple)]
+struct WithUnnamedFields(char, char, char);
+
+impl WithUnnamedFields {
+    fn parser<'a>() -> impl Parser<'a, &'a str, Self> {
+        any().then(any()).then(any()).from_tuple()
+    }
+}
+
+fn main() {
+    assert_eq!(
+        WithUnnamedFields::parser().parse("abc").unwrap(),
+        WithUnnamedFields('a', 'b', 'c')
+    );
+}
+```
+
+which derives
+
+```rust
+impl from_nested_tuple::FromNestedTuple for WithUnnamedFields {
+    type Tuple = ((char, char), char);
+    fn from_nested_tuple(tuple: Self::Tuple) -> Self {
+        let ((field0, field1), field2) = tuple;
+        Self(field0, field1, field2)
+    }
+}
+```
+
+</details>
+
+### Default Tuple
+
+<details>
+<summary>[`examples/tuples.rs`](./examples/tuple.rs)</summary>
+
+```rust
+use chumsky::prelude::*;
+use from_nested_tuple::FromTuple;
+
+fn parser<'a>() -> impl Parser<'a, &'a str, (char, char, char)> {
+    any().then(any()).then(any()).from_tuple()
+}
+
+fn main() {
+    assert_eq!(parser().parse("abc").unwrap(), ('a', 'b', 'c'))
+}
+```
+
+</details>
+
 ## Installation
 
 **Option A**: Modify `Cargo.toml`
@@ -16,72 +181,3 @@ from_nested_tuple = { git = "https://github.com/MasterTemple/from_nested_tuple" 
 cargo add --git "https://github.com/MasterTemple/from_nested_tuple"
 ```
 
-## Usage
-
-Deriving the `FromTuple` trait
-
-```rust
-use from_nested_tuple::FromTuple;
-
-#[derive(FromTuple)]
-pub struct Parent {
-    child1: Child1,
-    child2: Child2,
-    child3: Child3,
-    child4: Child4,
-}
-```
-
-generates
-
-```rust
-impl from_nested_tuple::FromTuple for Parent {
-    type Tuple = (((Child1, Child2), Child3), Child4);
-    fn from_tuple(tuple: Self::Tuple) -> Self {
-        let (((child1, child2), child3), child4) = tuple;
-        Self {
-            child1,
-            child2,
-            child3,
-            child4,
-        }
-    }
-}
-```
-
-so that you can write
-
-```rust
-impl Parent {
-    pub fn parser() -> chumsky::Parser<'a, &'a str, Self> {
-    Child1::parser()
-        .then(Child2::parser())
-        .then(Child3::parser())
-        .then(Child4::parser())
-        .map(FromTuple::from_tuple);
-    }
-}
-```
-
-instead of
-
-```rust
-impl Parent {
-    pub fn parser() -> chumsky::Parser<'a, &'a str, Self> {
-    Child1::parser()
-        .then(Child2::parser())
-        .then(Child3::parser())
-        .then(Child4::parser())
-        .map(|(((child1, child2), child3), child4)| {
-            Self {
-                child1,
-                child2,
-                child3,
-                child4,
-            }
-        });
-    }
-}
-```
-
-because once you get a decent number of fields, it is a mess
