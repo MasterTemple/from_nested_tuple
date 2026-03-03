@@ -184,7 +184,7 @@ fn main() {
 **Option A**: Modify `Cargo.toml`
 
 ```toml
-from_nested_tuple = "0.1.1"
+from_nested_tuple = "0.1.2"
 ```
 
 **Option B**: Run `cargo` command
